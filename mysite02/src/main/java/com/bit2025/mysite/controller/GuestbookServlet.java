@@ -1,5 +1,5 @@
 package com.bit2025.mysite.controller;
-
+//이건 지워도됨
 import java.io.IOException;
 import java.util.List;
 
