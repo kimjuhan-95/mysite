@@ -9,9 +9,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>Servlet Context (Tomcat) : Bad Request</h1>
+	<h1>Internal Server Error</h1>
 	<p>
-		잘못된 요청 입니다.
+		내부 서버에 장애가 발생 했습니다.
 	</p>
 </body>
 </html>

@@ -103,11 +103,12 @@ public class UserServlet extends HttpServlet {
 			String gender = request.getParameter("gender");
 			
 			UserVo vo = new UserVo();
-			vo.setId(authUser.getId());
 			vo.setName(name);
 			vo.setPassword(password);
 			vo.setGender(gender);
-			
+
+			vo.setId(authUser.getId());
+
 			new UserDao().update(vo);
 			authUser.setName(name);
 		
