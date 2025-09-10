@@ -29,4 +29,9 @@ public class UserService {
 	public void updateUser(UserVo userVo) {
 		userRepository.update(userVo);
 	}
+
+	public UserVo getUser(String email, String password) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
