@@ -18,20 +18,25 @@ public class UserService {
 		System.out.println("After Join:" + userVo);
 	}
 
+	public UserVo getUser(String email, String password) {
+		return userRepository.findByEmailAndPassword(email, password);
+	}
+
 	public UserVo getUser(UserVo userVo) {
-		return userRepository.findByEmailAndPassword(userVo.getEmail(), userVo.getPassword());
+		return getUser(userVo.getEmail(), userVo.getPassword());
 	}
 
 	public UserVo getUser(Long id) {
 		return userRepository.findById(id);
 	}
 
+	public UserVo getUser(String email) {
+		return userRepository.findByEmail(email);
+	}
+
 	public void updateUser(UserVo userVo) {
 		userRepository.update(userVo);
 	}
 
-	public UserVo getUser(String email, String password) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 }

@@ -12,8 +12,7 @@ import jakarta.servlet.http.HttpSession;
 public class Authlnterceptor implements HandlerInterceptor {
 
 	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-			throws Exception {
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		// 1. Handler 종류 확인
 		if(!(handler instanceof HandlerMethod)) {
 			// DefaultServletHttpRequestHandler 타입인 경우
@@ -29,7 +28,7 @@ public class Authlnterceptor implements HandlerInterceptor {
 		
 		// 4. 만약, handlerMethod에 @Auth가 없다면 Class(Type)에서 가져오기 
 		if(auth == null) {
-			
+			auth = handlerMethod.getMethod().getDeclaringClass().getAnnotation(Auth.class);
 		}
 		
 		// 5. handlerMethod와 Class(Type) 둘 다에 @Auth가 없는 경우
@@ -48,13 +47,19 @@ public class Authlnterceptor implements HandlerInterceptor {
 		
 		// 7. 권한(Authorization) 체크를 위해서 @Auth의 role("USER", "ADMIN") 가져오기
 		String role = auth.role();
+
+		// 8. @Auth의 role이 "USER"인 경우, authUser의 role은 "USER"이던 "ADMIN"이던 상관 없다.
+		if("USER".equals(role)) {
+			return true;
+		}
 		
-		String roleAuthUser = authUser.getRole();
+		// 9. @Auth의 role이 "ADMIN"인 경우, authUser의 role은 "ADMIN"이어야 한다.
+		if(!"ADMIN".equals(authUser.getRole())) {
+			response.sendRedirect(request.getContextPath());
+			return false;
+		}
 		
-		// authUser의 role과 권한 비교
-		// authUser(role = 'ADMIN')인 경우는 @Auth(role="USER"), @Auth(role=ADMIN")인 핸들러에 접근 가능
-		// authUser(role = 'USER')인 경우는 @Auth(role="USER")인 핸들러에만 접근 가능
-		
+		// 10. 옳은 관리자 권한 [@Auth(role="ADMIN") && authUser.role == "ADMIN"]
 		return true;
 	}
 

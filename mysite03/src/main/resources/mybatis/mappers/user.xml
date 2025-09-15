@@ -16,7 +16,7 @@
 	
 	<select id="findByEmailAndPassword" parameterType="map" resultType="uservo">
 		<![CDATA[
-		select id, name
+		select id, name, role
 		  from user
 		 where email = #{email}
 		   and password = password(#{password})
@@ -28,6 +28,14 @@
 		select id, name, email, gender
 		  from user
 		 where id = #{id}
+		]]>
+	</select>
+
+	<select id="findByEmail" parameterType="string" resultType="uservo">
+		<![CDATA[
+		select id, name, email, gender
+		  from user
+		 where email = #{email}
 		]]>
 	</select>
 	
