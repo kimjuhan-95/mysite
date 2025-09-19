@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.bit2025.mysite.security.Auth;
 import com.bit2025.mysite.security.AuthUser;
 import com.bit2025.mysite.service.BoardService;
 import com.bit2025.mysite.vo.BoardVo;
@@ -49,7 +48,6 @@ public class BoardController {
 		return "board/view";
 	}
 	
-	@Auth
 	@RequestMapping("/delete/{id}")
 	public String delete(
 		@AuthUser UserVo authUser, 
@@ -60,7 +58,6 @@ public class BoardController {
 		return "redirect:/board?p=" + page + "&kwd=" + keyword;
 	}
 	
-	@Auth
 	@RequestMapping(value="/modify/{id}", method=RequestMethod.GET)	
 	public String modify(@AuthUser UserVo authUser, @PathVariable("id") Long id, Model model) {
 		BoardVo boardVo = boardService.getContents(id, authUser.getId());
@@ -68,7 +65,6 @@ public class BoardController {
 		return "board/modify";
 	}
 
-	@Auth
 	@RequestMapping(value="/modify", method=RequestMethod.POST)	
 	public String modify(
 		@AuthUser UserVo authUser, 
@@ -82,13 +78,11 @@ public class BoardController {
 				"&kwd=" + keyword;
 	}
 
-	@Auth
 	@RequestMapping(value="/write", method=RequestMethod.GET)	
 	public String write() {
 		return "board/write";
 	}
 
-	@Auth
 	@RequestMapping(value="/write", method=RequestMethod.POST)	
 	public String write(
 		@AuthUser UserVo authUser,
@@ -100,7 +94,6 @@ public class BoardController {
 		return	"redirect:/board?p=" + page + "&kwd=" + keyword;
 	}
 
-	@Auth
 	@RequestMapping(value="/reply/{id}")	
 	public String reply(@PathVariable("id") Long id, Model model) {
 		BoardVo boardVo = boardService.getContents(id);
